@@ -6,5 +6,6 @@
   :dependencies [[clj-http "2.1.0"]
                  [clj-time "0.9.0"]
                  [com.infolace/excel-templates "0.3.3"]
-                 [org.clojure/clojure "1.8.0"]]
-  :main excel-templates-example.portfolio)
+                 [org.clojure/clojure "1.8.0"]
+                 [me.raynes/fs "1.4.6"]]
+  :main excel-templates-example.portfolio/excel-portfolio-report)

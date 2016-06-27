@@ -3,7 +3,8 @@
             [clj-time.core :as t]
             [clj-time.format :as f]
             [clojure.pprint :refer [cl-format]]
-            [excel-templates.build :as excel]))
+            [excel-templates.build :as excel]
+            [clojure.java.shell :as sh]))
 
 ;;; There are 4 parts to this example:
 ;;; 1) The description of the portfolio
@@ -146,25 +147,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Section 4: Apply Template
 
-(defn apply-template
-  "Apply the Excel template to the generated rows"
-  [row-data]
-  (excel/render-to-file
-   "portfolio-template.xlsx"
-   "/tmp/portfolio.xlsx"
-   row-data))
 
 (defn excel-portfolio-report
   "Make an excel report for our portfolio"
-  []
-  (-> my-portfolio
-      get-portfolio-history
-      create-row-data
-      apply-template))
+  [template result]
+  (->> my-portfolio
+       get-portfolio-history
+       create-row-data
+       ((partial excel/render-to-file template result))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Extra Section: Make a csv
-
 
 (defn make-simple-rows
   "Make the basic rows from the holdings data"
